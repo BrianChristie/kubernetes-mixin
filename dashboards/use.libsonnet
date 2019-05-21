@@ -33,10 +33,10 @@ local g = import 'grafana-builder/grafana.libsonnet';
           { yaxes: g.yaxes({ format: 'percentunit', max: 1 }) },
         )
         .addPanel(
-          g.panel('Memory Saturation (Swap I/O)') +
-          g.queryPanel('node:node_memory_swap_io_bytes:sum_rate{%(clusterLabel)s="$cluster"}' % $._config, '{{node}}', legendLink) +
+          g.panel('I/O Saturation (Pages In/Out)') +
+          g.queryPanel('node:node_memory_saturation_io_pages:sum_rate{%(clusterLabel)s="$cluster"}' % $._config, '{{node}}', legendLink) +
           g.stack +
-          { yaxes: g.yaxes('Bps') },
+          { yaxes: g.yaxes('Pages') },
         )
       )
       .addRow(
@@ -114,9 +114,9 @@ local g = import 'grafana-builder/grafana.libsonnet';
           { yaxes: g.yaxes('percentunit') },
         )
         .addPanel(
-          g.panel('Memory Saturation (Swap I/O)') +
-          g.queryPanel('node:node_memory_swap_io_bytes:sum_rate{%(clusterLabel)s="$cluster", node="$node"}' % $._config, 'Swap IO') +
-          { yaxes: g.yaxes('Bps') },
+          g.panel('I/O Saturation (Pages In/Out)') +
+          g.queryPanel('node:node_memory_saturation_io_pages:sum_rate{%(clusterLabel)s="$cluster", node="$node"}' % $._config, 'Swap IO') +
+          { yaxes: g.yaxes('Pages') },
         )
       )
       .addRow(
@@ -192,8 +192,8 @@ local g = import 'grafana-builder/grafana.libsonnet';
         )
         .addPanel(
           g.panel('Memory Saturation (Swap I/O)') +
-          g.queryPanel('sum(node:node_memory_swap_io_bytes:sum_rate) by (%(clusterLabel)s)' % $._config, '{{%(clusterLabel)s}}' % $._config, legendLink) +
-          { fill: 0, linewidth: 2, yaxes: g.yaxes('Bps') },
+          g.queryPanel('sum(node:node_memory_saturation_io_pages:sum_rate) by (%(clusterLabel)s)' % $._config, '{{%(clusterLabel)s}}' % $._config, legendLink) +
+          { fill: 0, linewidth: 2, yaxes: g.yaxes('Pages') },
         )
       )
       .addRow(

@@ -332,7 +332,7 @@
             ||| % $._config,
           },
           {
-            record: 'node:node_memory_swap_io_bytes:sum_rate',
+            record: 'node:node_memory_saturation_io_pages:sum_rate',
             expr: |||
               1e3 * sum by (node) (
                 (rate(node_vmstat_pgpgin{%(nodeExporterSelector)s}[1m])
